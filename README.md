@@ -19,7 +19,7 @@ $ cd mcp251x
 $ make
 ```
 If successful it should display something similar to below and create you a mcp251x.ko file. 
-``
+```
 make -C /lib/modules/4.19.75+/build M=/home/pi/mcp251x modules
 make[1]: Entering directory '/usr/src/linux-headers-4.19.75+'
   CC [M]  /home/pi/mcp251x/mcp251x.o
@@ -28,7 +28,7 @@ make[1]: Entering directory '/usr/src/linux-headers-4.19.75+'
   CC      /home/pi/mcp251x/mcp251x.mod.o
   LD [M]  /home/pi/mcp251x/mcp251x.ko
 make[1]: Leaving directory '/usr/src/linux-headers-4.19.75+'
-``
+```
 
 # Testing
 To test the driver, remove the old one (if loaded) and insert your new module into the kernel using:
@@ -41,7 +41,6 @@ and check your kernel messages:
 $ dmesg | grep -i mcp251x
 [ 1396.047462] mcp251x: loading out-of-tree module taints kernel.
 [ 1582.644169] mcp251x spi0.0 can0: MCP2515 successfully initialized.
-
 ```
 Parameters to specify CAN filters and masks can be sent to the kernel using insmod:
 ```
@@ -68,9 +67,9 @@ depends:        can-dev
 name:           mcp251x
 vermagic:       4.19.75+ mod_unload modversions ARMv6 p2v8
 parm:           mcp251x_enable_dma:Enable SPI DMA. Default: 0 (Off) (int)
-parm:           **rxbn_op_mode**:0 = (default) MCP2515 hardware filtering will be disabled for receive buffer n (0 or 1). rxb0 controls filters 0 and 1, rxb1 controls filters 2-5 Note there is kernel level filtering, but for high traffic scenarios kernel may not be able to keep up. 1 = use rxbn_mask and rxbn filters, but only accept std CAN ids. 2 = use rxbn_mask and rxbn filters, but only accept ext CAN ids. 3 = use rxbn_mask and rxbn filters, and accept ext or std CAN ids. (array of int)
-parm:           **rxbn_mask**:Mask used for receive buffer n if rxbn_op_mode  is 1, 2 or 3. Bits 10-0 for std ids. Bits 29-11 for ext ids. (array of int)
-parm:           **rxbn_filters**:Filter used for receive buffer n if rxbn_op_mode is 1, 2 or 3. Bits 10-0 for std ids. Bits 29-11 for ext ids (also need to set bit 30 for ext id filtering). Note that filters 0 and 1 correspond to rxbn_op_mode[0] and rxbn_mask[0], while filters 2-5 corresponds to rxbn_op_mode[1] and rxbn_mask[1] (array of int)
+parm:           rxbn_op_mode:0 = (default) MCP2515 hardware filtering will be disabled for receive buffer n (0 or 1). rxb0 controls filters 0 and 1, rxb1 controls filters 2-5 Note there is kernel level filtering, but for high traffic scenarios kernel may not be able to keep up. 1 = use rxbn_mask and rxbn filters, but only accept std CAN ids. 2 = use rxbn_mask and rxbn filters, but only accept ext CAN ids. 3 = use rxbn_mask and rxbn filters, and accept ext or std CAN ids. (array of int)
+parm:           rxbn_mask:Mask used for receive buffer n if rxbn_op_mode  is 1, 2 or 3. Bits 10-0 for std ids. Bits 29-11 for ext ids. (array of int)
+parm:           rxbn_filters:Filter used for receive buffer n if rxbn_op_mode is 1, 2 or 3. Bits 10-0 for std ids. Bits 29-11 for ext ids (also need to set bit 30 for ext id filtering). Note that filters 0 and 1 correspond to rxbn_op_mode[0] and rxbn_mask[0], while filters 2-5 corresponds to rxbn_op_mode[1] and rxbn_mask[1] (array of int)
 ```
 When the driver is loaded, you may check the current parameters via the sysfs. e.g.
 ```
