@@ -57,7 +57,7 @@
 #include <linux/can/core.h>
 #include <linux/can/dev.h>
 #include <linux/can/led.h>
-#include <linux/can/platform/mcp251x.h>
+#include "mcp251x.h"
 #include <linux/clk.h>
 #include <linux/completion.h>
 #include <linux/delay.h>
